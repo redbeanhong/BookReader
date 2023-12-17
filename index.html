@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Noto+Sans+TC:wght@400;500&family=Noto+Sans:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      href="./images/icon_16.ico?ver=20231009"
+      sizes="16x16"
+      type="image/png"
+    />
+    <link
+      rel="icon"
+      href="./images/icon_32.ico?ver=20231009"
+      sizes="32x32"
+      type="image/png"
+    />
+    <link
+      rel="icon"
+      href="./images/icon_64.ico?ver=20231009"
+      sizes="64x64"
+      type="image/png"
+    />
+    <title>阿豆看小說</title>
+    <link
+      rel="stylesheet"
+      href="./bootstrap-5.1.1-dist/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="./css/main.css" />
+    <script src="./bootstrap-5.1.1-dist/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <script src="./node_modules/vue/dist/vue.global.prod.js"></script>
+    <div id="app">
+      <div class="content bg-dark">
+        <section
+          class="modal"
+          id="links-window"
+          :class="{'d-block':isBookmarkOpen}"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header sticky-top bg-light">
+                <h5 class="modal-title" id="exampleModalLabel">書籤列</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  @click="toggleBookmarkWin(false)"
+                ></button>
+              </div>
+              <div class="modal-body" id="linkContent">
+                <ul>
+                  <li v-for="(page, index) in pages" :key="index">
+                    <a
+                      :href="'#title_'+page.pageIndex"
+                      @click="toggleWindow(false)"
+                      >{{page.pageTitle}}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  @click="toggleBookmarkWin(false)"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="sticky-top bg-dark pt-3 pb-3 active" id="nav">
+          <div class="container">
+            <div
+              class="d-flex justify-content-end align-items-center flex-wrap"
+            >
+              <label class="btn btn-secondary" for="fileInput">上傳小說</label>
+              <input
+                type="file"
+                class="form-control d-none"
+                id="fileInput"
+                @change="readBook"
+              />
+              <button
+                type="button"
+                class="btn btn-secondary ms-3"
+                id="open-links-window"
+                @click="toggleBookmarkWin(true)"
+              >
+                開啟書籤
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section class="container pb-5">
+          <div id="fileContents" class="pt-5" v-if="pages.length > 0">
+            <h2>{{pages[currentPage].pageTitle}}</h2>
+            <p v-for="(line, index) in pages[currentPage].pageTxt" :key="index">
+              {{line}}
+            </p>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
