@@ -32,6 +32,8 @@ createApp({
     const changePage = function (pageIndex) {
       currentPage.value = pageIndex;
       toggleBookmarkWin(false);
+      window.scrollTo(0, 0);
+
     };
 
     function parseContent(text) {
@@ -96,11 +98,11 @@ createApp({
     const handleKeyDown = function handleKeyDown(event) {
       if (event.key === "ArrowRight") {
         if (currentPage.value < pages.value.length - 1) {
-          currentPage.value++;
+          changePage(currentPage.value + 1);
         }
       } else if (event.key === "ArrowLeft") {
         if (currentPage.value > 1) {
-          currentPage.value--;
+          changePage(currentPage.value - 1);
         }
       }
     };
