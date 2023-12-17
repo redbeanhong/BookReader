@@ -7,7 +7,6 @@ createApp({
     let currentPage = ref(0);
 
     const readBook = function (e) {
-      console.log("RED");
       currentPage.value = 0;
       pages.value = [];
       let file = e.target.files[0];
@@ -40,6 +39,7 @@ createApp({
       let pageTxt = [];
       let pageTitle = "";
       let pageIndex = 0;
+      let isFirst = true;
       for (let i = 0; i < lines.length; i++) {
         const line = lines[i].trim();
         const matchs = [
@@ -63,7 +63,7 @@ createApp({
         for (let index = 0; index < matchs.length; index++) {
           const match = matchs[index];
           if (match) {
-            if (pageIndex != 0) {
+            if (!isFirst) {
               const page = {
                 pageIndex,
                 pageTitle,
@@ -73,10 +73,12 @@ createApp({
 
               pageTitle = "";
               pageTxt = [];
+              pageIndex++;
             }
-            pageIndex++;
+
             pageTitle = line;
             hasMatch = true;
+            isFirst = false;
           }
         }
         if (!hasMatch) {
