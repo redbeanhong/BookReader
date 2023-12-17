@@ -76,28 +76,30 @@
           </div>
         </section>
 
-        <section class="sticky-top bg-dark pt-3 pb-3 active" id="nav">
-          <div class="container">
-            <div
-              class="d-flex justify-content-end align-items-center flex-wrap"
-            >
-              <label class="btn btn-secondary" for="fileInput">上傳小說</label>
+        <section class="bg-dark" id="nav">
+          <ul class="nav-container">
+            <li class="nav-item">
+              <a href="#" class="btn btn-secondary" @click.privent="">
+                <label for="fileInput" class="cursor-pointer">上傳小說</label>
+              </a>
               <input
                 type="file"
                 class="form-control d-none"
                 id="fileInput"
                 @change="readBook"
               />
-              <button
-                type="button"
-                class="btn btn-secondary ms-3"
+            </li>
+            <li class="nav-item">
+              <a
+                href="#"
+                class="btn btn-secondary mt-3"
                 id="open-links-window"
-                @click="toggleBookmarkWin(true)"
+                @click.privent="toggleBookmarkWin(true)"
               >
                 開啟書籤
-              </button>
-            </div>
-          </div>
+              </a>
+            </li>
+          </ul>
         </section>
 
         <section class="container pb-5">

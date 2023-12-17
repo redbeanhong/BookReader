@@ -28,14 +28,32 @@ p {
 }
 
 #nav {
-  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
 }
 
-#nav.active {
-  display: block;
+.nav-container {
+  height: 100vh;
+  padding: 0;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  right: 1rem;
+  list-style: none;
+}
+.nav-container .nav-item {
+  width: 4rem;
 }
 
 .position-tag {
   width: 100%;
   height: 10vh;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }/*# sourceMappingURL=main.css.map */
