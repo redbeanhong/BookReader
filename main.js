@@ -1,11 +1,15 @@
-const { createApp, ref, mounted, methods } = Vue;
+const { createApp, ref, onMounted, onBeforeUnmount } = Vue;
 
 createApp({
   setup() {
     const isBookmarkOpen = ref(false);
     let pages = ref([]);
     let currentPage = ref(0);
+
     const readBook = function (e) {
+      console.log("RED");
+      currentPage.value = 0;
+      pages.value = [];
       let file = e.target.files[0];
 
       if (file) {
@@ -25,6 +29,10 @@ createApp({
     };
     const toggleBookmarkWin = function (isOpen) {
       isBookmarkOpen.value = isOpen;
+    };
+    const changePage = function (pageIndex) {
+      currentPage.value = pageIndex;
+      toggleBookmarkWin(false);
     };
 
     function parseContent(text) {
@@ -56,11 +64,13 @@ createApp({
           const match = matchs[index];
           if (match) {
             if (pageIndex != 0) {
-              pages.value.push({
+              const page = {
                 pageIndex,
                 pageTitle,
                 pageTxt,
-              });
+              };
+              pages.value.push(page);
+
               pageTitle = "";
               pageTxt = [];
             }
@@ -80,16 +90,33 @@ createApp({
           pageTxt,
         });
       }
-      console.log(pages.value);
     }
+    const handleKeyDown = function handleKeyDown(event) {
+      if (event.key === "ArrowRight") {
+        if (currentPage.value < pages.value.length - 1) {
+          currentPage.value++;
+        }
+      } else if (event.key === "ArrowLeft") {
+        if (currentPage.value > 1) {
+          currentPage.value--;
+        }
+      }
+    };
 
+    onMounted(() => {
+      window.addEventListener("keydown", handleKeyDown);
+    });
+
+    onBeforeUnmount(() => {
+      window.removeEventListener("keydown", handleKeyDown);
+    });
     return {
       isBookmarkOpen,
       pages,
       currentPage,
       readBook,
       toggleBookmarkWin,
+      changePage,
     };
   },
-  mounted() {},
 }).mount("#app");

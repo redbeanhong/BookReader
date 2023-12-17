@@ -57,9 +57,7 @@
               <div class="modal-body" id="linkContent">
                 <ul>
                   <li v-for="(page, index) in pages" :key="index">
-                    <a
-                      :href="'#title_'+page.pageIndex"
-                      @click="toggleWindow(false)"
+                    <a href="#" @click.privent="changePage(page.pageIndex)"
                       >{{page.pageTitle}}
                     </a>
                   </li>
@@ -103,7 +101,7 @@
         </section>
 
         <section class="container pb-5">
-          <div id="fileContents" class="pt-5" v-if="pages.length > 0">
+          <div id="fileContents" class="pt-5" v-if="pages[currentPage]">
             <h2>{{pages[currentPage].pageTitle}}</h2>
             <p v-for="(line, index) in pages[currentPage].pageTxt" :key="index">
               {{line}}
