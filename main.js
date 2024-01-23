@@ -29,11 +29,21 @@ createApp({
     const toggleBookmarkWin = function (isOpen) {
       isBookmarkOpen.value = isOpen;
     };
+    const updateOnePage = function (isAdd) {
+      if (isAdd) {
+        if (currentPage.value < pages.value.length - 1) {
+          changePage(currentPage.value + 1);
+        }
+      } else {
+        if (currentPage.value >= 1) {
+          changePage(currentPage.value - 1);
+        }
+      }
+    };
     const changePage = function (pageIndex) {
       currentPage.value = pageIndex;
       toggleBookmarkWin(false);
       window.scrollTo(0, 0);
-
     };
 
     function parseContent(text) {
@@ -52,13 +62,13 @@ createApp({
           line.match(/^第\d+章\s*(.*?)$/), // 第01章
           line.match(/^第\d+卷\s*(.*?)$/), // 第01卷
           line.match(
-            /^第[一二三四五六七八九十百千萬一二三四五六七八九]+話\s*(.*?)$/
+            /^第[零一二三四五六七八九十百千萬一二三四五六七八九]+話\s*(.*?)$/
           ), // 第一話
           line.match(
-            /^第[一二三四五六七八九十百千萬一二三四五六七八九]+章\s*(.*?)$/
+            /^第[零一二三四五六七八九十百千萬一二三四五六七八九]+章\s*(.*?)$/
           ), // 第一章
           line.match(
-            /^第[一二三四五六七八九十百千萬一二三四五六七八九]+卷\s*(.*?)$/
+            /^第[零一二三四五六七八九十百千萬一二三四五六七八九]+卷\s*(.*?)$/
           ), // 第一卷
         ];
         let hasMatch = false;
@@ -97,13 +107,9 @@ createApp({
     }
     const handleKeyDown = function handleKeyDown(event) {
       if (event.key === "ArrowRight") {
-        if (currentPage.value < pages.value.length - 1) {
-          changePage(currentPage.value + 1);
-        }
+        updateOnePage(true);
       } else if (event.key === "ArrowLeft") {
-        if (currentPage.value > 1) {
-          changePage(currentPage.value - 1);
-        }
+        updateOnePage(false);
       }
     };
 
@@ -121,6 +127,7 @@ createApp({
       readBook,
       toggleBookmarkWin,
       changePage,
+      updateOnePage
     };
   },
 }).mount("#app");
