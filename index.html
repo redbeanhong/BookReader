@@ -57,9 +57,7 @@
               <div class="modal-body" id="linkContent">
                 <ul>
                   <li v-for="(page, index) in pages" :key="index">
-                    <a
-                      :href="'#title_'+page.pageIndex"
-                      @click="toggleWindow(false)"
+                    <a href="#" @click.privent="changePage(page.pageIndex)"
                       >{{page.pageTitle}}
                     </a>
                   </li>
@@ -78,32 +76,49 @@
           </div>
         </section>
 
-        <section class="sticky-top bg-dark pt-3 pb-3 active" id="nav">
-          <div class="container">
-            <div
-              class="d-flex justify-content-end align-items-center flex-wrap"
-            >
-              <label class="btn btn-secondary" for="fileInput">上傳小說</label>
+        <section class="bg-dark" id="nav">
+          <ul class="nav-container">
+            <li class="nav-item">
+              <label for="fileInput" class="btn btn-secondary">上傳小說</label>
               <input
                 type="file"
                 class="form-control d-none"
                 id="fileInput"
                 @change="readBook"
               />
-              <button
-                type="button"
-                class="btn btn-secondary ms-3"
-                id="open-links-window"
-                @click="toggleBookmarkWin(true)"
+            </li>
+            <li class="nav-item">
+              <a
+                href="#"
+                class="btn btn-secondary mt-3"
+                @click.privent="toggleBookmarkWin(true)"
               >
                 開啟書籤
-              </button>
-            </div>
-          </div>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                href="#"
+                class="btn btn-secondary mt-3"
+                @click.privent="updateOnePage(false)"
+              >
+                返回一頁
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                href="#"
+                class="btn btn-secondary mt-3"
+                @click.privent="updateOnePage(true)"
+              >
+                往下一頁
+              </a>
+            </li>
+          </ul>
         </section>
 
         <section class="container pb-5">
-          <div id="fileContents" class="pt-5" v-if="pages.length > 0">
+          <div id="fileContents" class="pt-5" v-if="pages[currentPage]">
             <h2>{{pages[currentPage].pageTitle}}</h2>
             <p v-for="(line, index) in pages[currentPage].pageTxt" :key="index">
               {{line}}
@@ -113,6 +128,6 @@
       </div>
     </div>
 
-    <script type="module" src="./main.js"></script>
+    <script src="./main.js"></script>
   </body>
 </html>

@@ -1,11 +1,14 @@
-const { createApp, ref, mounted, methods } = Vue;
+const { createApp, ref, onMounted, onBeforeUnmount } = Vue;
 
 createApp({
   setup() {
     const isBookmarkOpen = ref(false);
     let pages = ref([]);
     let currentPage = ref(0);
+
     const readBook = function (e) {
+      currentPage.value = 0;
+      pages.value = [];
       let file = e.target.files[0];
 
       if (file) {
@@ -26,12 +29,29 @@ createApp({
     const toggleBookmarkWin = function (isOpen) {
       isBookmarkOpen.value = isOpen;
     };
+    const updateOnePage = function (isAdd) {
+      if (isAdd) {
+        if (currentPage.value < pages.value.length - 1) {
+          changePage(currentPage.value + 1);
+        }
+      } else {
+        if (currentPage.value >= 1) {
+          changePage(currentPage.value - 1);
+        }
+      }
+    };
+    const changePage = function (pageIndex) {
+      currentPage.value = pageIndex;
+      toggleBookmarkWin(false);
+      window.scrollTo(0, 0);
+    };
 
     function parseContent(text) {
       let lines = text.split("<br>");
       let pageTxt = [];
       let pageTitle = "";
       let pageIndex = 0;
+      let isFirst = true;
       for (let i = 0; i < lines.length; i++) {
         const line = lines[i].trim();
         const matchs = [
@@ -42,31 +62,35 @@ createApp({
           line.match(/^第\d+章\s*(.*?)$/), // 第01章
           line.match(/^第\d+卷\s*(.*?)$/), // 第01卷
           line.match(
-            /^第[一二三四五六七八九十百千萬一二三四五六七八九]+話\s*(.*?)$/
+            /^第[零一二三四五六七八九十百千萬一二三四五六七八九]+話\s*(.*?)$/
           ), // 第一話
           line.match(
-            /^第[一二三四五六七八九十百千萬一二三四五六七八九]+章\s*(.*?)$/
+            /^第[零一二三四五六七八九十百千萬一二三四五六七八九]+章\s*(.*?)$/
           ), // 第一章
           line.match(
-            /^第[一二三四五六七八九十百千萬一二三四五六七八九]+卷\s*(.*?)$/
+            /^第[零一二三四五六七八九十百千萬一二三四五六七八九]+卷\s*(.*?)$/
           ), // 第一卷
         ];
         let hasMatch = false;
         for (let index = 0; index < matchs.length; index++) {
           const match = matchs[index];
           if (match) {
-            if (pageIndex != 0) {
-              pages.value.push({
+            if (!isFirst) {
+              const page = {
                 pageIndex,
                 pageTitle,
                 pageTxt,
-              });
+              };
+              pages.value.push(page);
+
               pageTitle = "";
               pageTxt = [];
+              pageIndex++;
             }
-            pageIndex++;
+
             pageTitle = line;
             hasMatch = true;
+            isFirst = false;
           }
         }
         if (!hasMatch) {
@@ -80,16 +104,30 @@ createApp({
           pageTxt,
         });
       }
-      console.log(pages.value);
     }
+    const handleKeyDown = function handleKeyDown(event) {
+      if (event.key === "ArrowRight") {
+        updateOnePage(true);
+      } else if (event.key === "ArrowLeft") {
+        updateOnePage(false);
+      }
+    };
 
+    onMounted(() => {
+      window.addEventListener("keydown", handleKeyDown);
+    });
+
+    onBeforeUnmount(() => {
+      window.removeEventListener("keydown", handleKeyDown);
+    });
     return {
       isBookmarkOpen,
       pages,
       currentPage,
       readBook,
       toggleBookmarkWin,
+      changePage,
+      updateOnePage
     };
   },
-  mounted() {},
 }).mount("#app");
