@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: "Noto Sans", sans-serif;
   font-family: "Noto Sans JP", sans-serif;
@@ -18,8 +22,24 @@ p {
 }
 
 .content {
-  min-height: 100vh;
+  min-height: 80vh;
   color: rgb(174, 174, 174);
+}
+
+.header,
+.footer {
+  width: 100%;
+  height: 10vh;
+  position: sticky;
+  left: 0;
+}
+
+.header {
+  top: 0;
+}
+
+.footer {
+  bottom: 0;
 }
 
 .container {
@@ -56,4 +76,8 @@ p {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.footer-spacer {
+  height: 50vh;
 }/*# sourceMappingURL=main.css.map */

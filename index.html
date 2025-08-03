@@ -38,7 +38,8 @@
   <body>
     <script src="./js/vue3/vue.global.prod.js"></script>
     <div id="app">
-      <div class="content bg-dark">
+      <header class="header bg-dark"></header>
+      <main class="content bg-dark">
         <section
           class="modal"
           id="links-window"
@@ -117,15 +118,17 @@
           </ul>
         </section>
 
-        <section class="container pb-5">
-          <div id="fileContents" class="pt-5" v-if="pages[currentPage]">
+        <section class="container">
+          <div id="fileContents" v-if="pages[currentPage]">
             <h2>{{pages[currentPage].pageTitle}}</h2>
             <p v-for="(line, index) in pages[currentPage].pageTxt" :key="index">
               {{line}}
             </p>
           </div>
+          <div class="footer-spacer"></div>
         </section>
-      </div>
+      </main>
+      <footer class="footer bg-dark"></footer>
     </div>
 
     <script src="./js/main.js"></script>
