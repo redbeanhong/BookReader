@@ -80,4 +80,9 @@ p {
 
 .footer-spacer {
   height: 50vh;
+}
+
+#linkContent {
+  height: 60vh;
+  overflow: auto;
 }/*# sourceMappingURL=main.css.map */

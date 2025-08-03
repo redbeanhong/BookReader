@@ -111,6 +111,12 @@ createApp({
         updateOnePage(true);
       } else if (event.key === "ArrowLeft") {
         updateOnePage(false);
+      } else if (event.key === "PageDown") {
+        event.preventDefault();
+        window.scrollBy({ top: window.innerHeight * 0.7 });
+      } else if (event.key === "PageUp") {
+        event.preventDefault();
+        window.scrollBy({ top: -window.innerHeight * 0.7 });
       }
     };
 
@@ -128,7 +134,7 @@ createApp({
       readBook,
       toggleBookmarkWin,
       changePage,
-      updateOnePage
+      updateOnePage,
     };
   },
 }).mount("#app");
