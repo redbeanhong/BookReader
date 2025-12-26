@@ -43,6 +43,7 @@ p {
 }
 
 .container {
+  max-width: 900px;
   width: 70%;
   margin: auto;
 }
