@@ -123,12 +123,19 @@ createApp({
       }
     };
 
+    // 禁止拖放選取的文字，避免 Chrome 卡在拖放狀態導致頁面無法點擊
+    const preventDrag = function (event) {
+      event.preventDefault();
+    };
+
     onMounted(() => {
       window.addEventListener("keydown", handleKeyDown);
+      document.addEventListener("dragstart", preventDrag);
     });
 
     onBeforeUnmount(() => {
       window.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("dragstart", preventDrag);
     });
     return {
       isBookmarkOpen,

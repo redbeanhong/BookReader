@@ -58,7 +58,7 @@
               <div class="modal-body" id="linkContent">
                 <ul>
                   <li v-for="(page, index) in pages" :key="index">
-                    <a href="#" @click.privent="changePage(page.pageIndex)"
+                    <a href="#" @click.prevent="changePage(page.pageIndex)"
                       >{{page.pageTitle}}
                     </a>
                   </li>
@@ -92,7 +92,7 @@
               <a
                 href="#"
                 class="btn btn-secondary mt-3"
-                @click.privent="toggleBookmarkWin(true)"
+                @click.prevent="toggleBookmarkWin(true)"
               >
                 開啟書籤
               </a>
@@ -101,7 +101,7 @@
               <a
                 href="#"
                 class="btn btn-secondary mt-3"
-                @click.privent="updateOnePage(false)"
+                @click.prevent="updateOnePage(false)"
               >
                 返回一頁
               </a>
@@ -110,7 +110,7 @@
               <a
                 href="#"
                 class="btn btn-secondary mt-3"
-                @click.privent="updateOnePage(true)"
+                @click.prevent="updateOnePage(true)"
               >
                 往下一頁
               </a>
